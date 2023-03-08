@@ -16,18 +16,41 @@ using namespace std;
 //  los métodos definidos en el archivo complejo.h
 
 int main(int argc, char** argv){
-  Complejo a, b, tercero;
+//  cout << argc << endl;
+  if( argc != 6 ){
+    cout << "Debe pasar [-a, -i, -c, -r] y cuatro números";
+    return 1;
+  }
+
+  Complejo a, b( a ), tercero(8.9, 9.8);
   double dist;
-  a.setRe ( 3.14 );
-  a.setIm( 4.68 );
-  b.setRe( 8.55 );
-  b.setIm( 6.68 );
-  dist = a.distancia( b );
-  cout << " la distancia es: " << dist << endl;
 
-  tercero = a + b;
+  a.setRe( atof( argv[2] ) );
+  a.setIm( atof( argv[3] ) );
+  b.setRe( atof( argv[4] ) );
+  b.setIm( atof( argv[5] ) );
 
-  cout << "La suma de " << a << " + " << b << "es igual a " << tercero << endl;
+  switch( argv[1][1] ){
+    case 'a':
+      cout << "Adición" << endl;
+      tercero = a + b;
+      cout << "La suma de " << a << " + " << b << " es igual a " << tercero << endl;
+      break;
+    case 'i':
+      tercero =  a.inverso();
+      cout << "El inverso de " << a << " es " << tercero << endl;
+      break;
+    case 'r':
+      tercero = a - b;
+      cout << "La diferencia entre " << a << " y " << b << " es " << tercero << endl;
+      break;
+    case 'c':
+      tercero = a.conjugado();
+      cout << "El conjugado de " << a << " es " << tercero << endl;
+      break;
+    default:
+      cout << "No reconozco la operación solicitada" << endl;
+  }
 
   return 0;
 }

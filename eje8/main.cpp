@@ -25,6 +25,7 @@ int main(int argc, char** argv){
   Complejo a, b( a ), tercero(8.9, 9.8);
   double dist;
 
+  cout << a << ", " << b << ", " << tercero << endl;
   a.setRe( atof( argv[2] ) );
   a.setIm( atof( argv[3] ) );
   b.setRe( atof( argv[4] ) );

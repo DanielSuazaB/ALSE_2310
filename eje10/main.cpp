@@ -30,13 +30,17 @@ int main(int argc, char** argv){
   complex<double> *vec = new complex<double>[lineas] ;
 
 
-  input.open( argv[1] );
+  input.open( argv[1] );  // Se abre nuevamente el archivo para leer los datos.
 
   for(int  i = 0; i < lineas; i++ ){
-    getline( input, texto);
+    getline( input, texto);  // Aquí se leyó la línea y ahora falta procesarla para extraer la
+                             // parte real y a parte imaginaria  ej: -3.14 + 2.67j
+
     vec[i].real( atof( argv[2*i + 1] ) );
     vec[i].imag( atof( argv[2*i + 2] ) );
   }
+
+  input.close();  // Se cierra el archivo
 
   bool again;
   complex<double> aux;
@@ -66,7 +70,7 @@ int main(int argc, char** argv){
   }while( again == true ); 
 
 
-  ofstream output("output.txt");
+  ofstream output("output.txt");  // Se crea el objeto para abrir el archivo de escritura
 
 
   for(int  i = 0; i < lineas; i++ ){
@@ -74,7 +78,7 @@ int main(int argc, char** argv){
     cout << vec[i] << "<" << arg( vec[i] ) << endl;
   }
   
-  output.close();
+  output.close();  // Se cierra el archivo de escritura.
 
   return 0;
 }

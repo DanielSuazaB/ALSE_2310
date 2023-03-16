@@ -3,6 +3,8 @@
 #include <complex>
 #include <fstream>
 #include <string>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -22,6 +24,7 @@ int main(int argc, char** argv){
   ifstream input( argv[1] );
   while( getline( input, texto) ){
     lineas++;
+    cout << texto << endl;
   }
   
   input.close();
@@ -31,13 +34,27 @@ int main(int argc, char** argv){
 
 
   input.open( argv[1] );  // Se abre nuevamente el archivo para leer los datos.
+  size_t pos=0;
+  string a, b;
+  double r, im;
 
   for(int  i = 0; i < lineas; i++ ){
     getline( input, texto);  // Aquí se leyó la línea y ahora falta procesarla para extraer la
                              // parte real y a parte imaginaria  ej: -3.14 + 2.67j
 
-    vec[i].real( atof( argv[2*i + 1] ) );
-    vec[i].imag( atof( argv[2*i + 2] ) );
+    pos = texto.find_first_not_of(".,0123456789", 1 );
+    cout << "posición: " << pos << endl;  
+    a = texto.substr( 0, pos);
+    a.erase( remove( a.begin(), a.end(), ' '), a.end() );
+    b =  texto.substr( pos, texto.length() - pos - 1);
+    b.erase( remove( b.begin(), b.end(), ' ' ), b.end() );
+    cout << "a: " << a << ", b: " << b << endl;
+    r = stod( a.c_str());
+    //cout << "real, " ;
+    im = stod( b.c_str() );
+    //cout << " imag" << endl;
+    vec[i].real( r );
+    vec[i].imag( im );
   }
 
   input.close();  // Se cierra el archivo
@@ -48,7 +65,7 @@ int main(int argc, char** argv){
   do{
     again = false;
       
-    for( int i = 0; i < 4; i++){
+    for( int i = 0; i < lineas; i++){
 
 
       if ( arg( vec[i] ) > arg( vec[i+1] ) ){
@@ -74,7 +91,7 @@ int main(int argc, char** argv){
 
 
   for(int  i = 0; i < lineas; i++ ){
-    ouput << vec[i].real() << ( vec[i].imag() < 0? " - "; " + " ) << vec[i].imag << "j" << endl;
+    output << vec[i].real() << ( vec[i].imag() < 0? " - ": " + " ) << abs( vec[i].imag() ) << "j" << endl;
     cout << vec[i] << "<" << arg( vec[i] ) << endl;
   }
   

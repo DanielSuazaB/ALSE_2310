@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-
+#include <vector>
 
 using namespace std;
 
@@ -18,56 +18,46 @@ int main(int argc, char** argv){
     cout << "Debe pasar la url del archivo que contiene los números complejos.";
     return 1;
   }
-
-  int      lineas = 0;
-  string   texto;
-  ifstream input( argv[1] );
-
-  while( getline( input, texto) ){
-    lineas++;
-//    cout << texto << endl;
-  }
   
-  input.close();
-  
-  cout << "Leídas " << lineas << " líneas." << endl;
-  complex<double> *vec = new complex<double>[lineas] ;
-
-
-  input.open( argv[1] );  // Se abre nuevamente el archivo para leer los datos.
-
+  int i=0;
   size_t pos=0;
   string a, b;
   double r, im;
+  bool again;
+  complex<double> aux;
 
-  for(int  i = 0; i < lineas; i++ ){
-    getline( input, texto);  // Aquí se leyó la línea y ahora falta procesarla para extraer la
-                             // parte real y a parte imaginaria  ej: -3.14 + 2.67j
+  string   texto;
+  vector< complex<double> > vec;
 
+  ifstream input( argv[1] );
+
+  while( getline( input, texto) ){
+    // Aquí se leyó la línea y ahora falta procesarla para extraer la
+    // parte real y a parte imaginaria  ej: -3.14 + 2.67j
+
+//    cout << texto << endl;
     pos = texto.find_first_not_of(".,0123456789", 1 );
-//    cout << "posición: " << pos << endl;  
     a = texto.substr( 0, pos);
     a.erase( remove( a.begin(), a.end(), ' '), a.end() );
     b =  texto.substr( pos, texto.length() - pos - 1);
     b.erase( remove( b.begin(), b.end(), ' ' ), b.end() );
-//    cout << "a: " << a << ", b: " << b << endl;
     r = stod( a.c_str());
-    //cout << "real, " ;
     im = stod( b.c_str() );
-    //cout << " imag" << endl;
-    vec[i].real( r );
-    vec[i].imag( im );
+    aux.real( r );
+    aux.imag( im );
+//    cout << aux << endl;
+    vec.push_back( aux );
+//    cout << i++ << endl;
   }
+  
+  input.close();
+  
 
-  input.close();  // Se cierra el archivo
-
-  bool again;
-  complex<double> aux;
 
   do{
     again = false;
       
-    for( int i = 0; i < lineas; i++){
+    for( size_t i = 0; i < vec.size(); i++){
       if ( arg( vec[i] ) > arg( vec[i+1] ) ){
         aux = vec[i];
         vec[i] = vec[i+1];
@@ -90,7 +80,7 @@ int main(int argc, char** argv){
   ofstream output("output.txt");  // Se crea el objeto para abrir el archivo de escritura
 
 
-  for(int  i = 0; i < lineas; i++ ){
+  for(size_t  i = 0; i < vec.size(); i++ ){
     output << vec[i].real() << ( vec[i].imag() < 0? " - ": " + " ) << abs( vec[i].imag() ) << "j" << endl;
 //    cout << vec[i] << " < " << arg( vec[i] ) << endl;
   }

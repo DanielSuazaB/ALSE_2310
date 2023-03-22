@@ -1,99 +1,78 @@
 #include <iostream>
 #include <math.h>
-#include "complejo.h"
+#include "punto2d.h"
 
 using namespace std;
 
-bool Complejo::setRe( double r ){ 
-  re = r; 
+bool Punto2D::X( double r ){ 
+  x = r; 
   return true;
 }
 
-bool Complejo::setIm( double i ){ 
-  im = i; 
+bool Punto2D::X( double i ){ 
+  y = i; 
   return true;
 }
 
-double Complejo::distancia( const Complejo &b ){
-    double x = b.re - re;
-    double y = b.im - im;
-    return sqrt( x * x  + y * y );
+double Punto2D::distancia( const Punto2D &b ){
+    double dx = b.x - x;
+    double dy = b.y - y;
+    return sqrt( dx * dx  + dy * dy );
 }
 
-double Complejo::angulo(){
-  return atan2(im, re);
+double Punto2D::angulo(){
+  return atan2(y, x);
 }
 
-double Complejo::magnitud(){
-  return sqrt(re*re + im*im);
+double Punto2D::magnitud(){
+  return sqrt(x*x + y*y);
 }
 
-Complejo Complejo::operator+(Complejo &a){
-    Complejo c;
-    c.re = re + a.re;
-    c.im = im + a.im;
+Punto2D Punto2D::operator+(Punto2D &a){
+    Punto2D c;
+    c.x = x + a.x;
+    c.y = y + a.y;
     return c;
   }
 
-ostream& operator<< (ostream& out, Complejo &a){
-  out  << a.re << (a.im < 0? " - ":" + ") << abs(a.im) << "j";
+ostream& operator<< (ostream& out, Punto2D &a){
+  out  << "( " << a.x << ", " << a.y << " )";
   return out;
 }
   
 
-Complejo::Complejo()
+Punto2D::Punto2D()
 {
-    re = im = 0.;
+    x = y = 0.;
 }
 
-Complejo::Complejo(Complejo &a)
+Punto2D::Punto2D(Punto2D &a)
 {
-  re = a.re;
-  im = a.im;
+  x = a.x;
+  y = a.y;
 }
 
-Complejo::Complejo(double r, double i)
+Punto2D::Punto2D(double r, double i)
 {
-  re = r;
-  im = i;
+  x = r;
+  y = i;
 }
 
-double   Complejo::getRe(){
+double   Punto2D::X(){
   return re;
 }
 
-double    Complejo::getIm(){
+double    Punto2D::Y(){
   return im;
 }
 
-Complejo  Complejo::operator-(Complejo &a){
+Punto2D  Punto2D::operator-(Punto2D &a){
   Complejo c;
   c.re = re - a.re;
   c.im = im - a.im;
   return c;
 }
 
-Complejo  Complejo::operator*(Complejo &a){
-  Complejo c;
-  c.re = re * a.re - im * a.im;
-  c.im = re * a.im + im * a.re;
-  return c;
-}
-
-Complejo  Complejo::conjugado(){
-  Complejo c;
-  c.re = re;
-  c.im = -im;
-  return c;
-}
-
-Complejo  Complejo::inverso(){
-  Complejo c;
-  double d = re * re + im * im;
-  c.re = re / d ;
-  c.im = -im / d;
-  return c;
-}
 
 
 

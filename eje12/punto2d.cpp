@@ -9,7 +9,15 @@ bool Punto2D::X( double r ){
   return true;
 }
 
-bool Punto2D::X( double i ){ 
+double   Punto2D::X(){
+  return x;
+}
+
+double    Punto2D::Y(){
+  return y;
+}
+
+bool Punto2D::Y( double i ){ 
   y = i; 
   return true;
 }
@@ -46,36 +54,21 @@ Punto2D::Punto2D()
     x = y = 0.;
 }
 
-Punto2D::Punto2D(Punto2D &a)
+/*Punto2D::Punto2D(const Punto2D &a)
 {
   x = a.x;
   y = a.y;
 }
-
+*/
 Punto2D::Punto2D(double r, double i)
 {
   x = r;
   y = i;
 }
 
-double   Punto2D::X(){
-  return re;
-}
-
-double    Punto2D::Y(){
-  return im;
-}
-
 Punto2D  Punto2D::operator-(Punto2D &a){
-  Complejo c;
-  c.re = re - a.re;
-  c.im = im - a.im;
+  Punto2D c;
+  c.x = x - a.x;
+  c.y = y - a.y;
   return c;
 }
-
-
-
-
-
-
-

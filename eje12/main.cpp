@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include <complex>
+#include "punto2d.h"
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -9,7 +9,7 @@
 using namespace std;
 
 /*  La forma de llamar al programa será:
-    eje10 ../datos.txt
+    eje12 ../datos.txt
 */
 
 int main(int argc, char** argv){
@@ -24,10 +24,10 @@ int main(int argc, char** argv){
   string a, b;
   double r, im;
   bool again;
-  complex<double> aux;
+  Punto2D aux;
 
   string   texto;
-  vector< complex<double> > vec;
+  vector<Punto2D> vec;
 
   ifstream input( argv[1] );
 
@@ -35,7 +35,7 @@ int main(int argc, char** argv){
     // Aquí se leyó la línea y ahora falta procesarla para extraer la
     // parte real y a parte imaginaria  ej: -3.14 + 2.67j
 
-//    cout << texto << endl;
+    cout << texto << endl;
     pos = texto.find_first_not_of(".,0123456789", 1 );
     a = texto.substr( 0, pos);
     a.erase( remove( a.begin(), a.end(), ' '), a.end() );
@@ -43,17 +43,17 @@ int main(int argc, char** argv){
     b.erase( remove( b.begin(), b.end(), ' ' ), b.end() );
     r = stod( a.c_str());
     im = stod( b.c_str() );
-    aux.real( r );
-    aux.imag( im );
-//    cout << aux << endl;
+    aux.X( r );
+    aux.Y( im );
+    cout << aux << endl;
     vec.push_back( aux );
-//    cout << i++ << endl;
+    cout << i++ << endl;
   }
   
   input.close();
   
 
-
+/*
   do{
     again = false;
       
@@ -79,13 +79,14 @@ int main(int argc, char** argv){
 
   ofstream output("output.txt");  // Se crea el objeto para abrir el archivo de escritura
 
+*/
 
   for(size_t  i = 0; i < vec.size(); i++ ){
-    output << vec[i].real() << ( vec[i].imag() < 0? " - ": " + " ) << abs( vec[i].imag() ) << "j" << endl;
-//    cout << vec[i] << " < " << arg( vec[i] ) << endl;
+//    output << vec[i].real() << ( vec[i].imag() < 0? " - ": " + " ) << abs( vec[i].imag() ) << "j" << endl;
+    cout << vec[i] << endl;
   }
   
-  output.close();  // Se cierra el archivo de escritura.
+//  output.close();  // Se cierra el archivo de escritura.
 
   return 0;
 }

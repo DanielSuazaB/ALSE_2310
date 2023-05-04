@@ -12,12 +12,12 @@ int main(){
     std::cout << "ordenado: " << b << std::endl;
 
     Polinomio c = b / 8.;
-    std::cout << c << std::endl;
+    std::cout << "Dividido por " << 8 << ": " << c << std::endl;
 
     Polinomio d = a + b;
-    std::cout << d << std::endl;
+    std::cout << "Sumandos: " << d << std::endl;
 
     Polinomio e = a - b;
-    std::cout << e << std::endl;
+    std::cout << "Restados: " << e << std::endl;
     return 0;
 }

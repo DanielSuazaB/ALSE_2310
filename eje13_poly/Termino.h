@@ -15,8 +15,8 @@ public:
 
     float getC(){return _coeficiente;}
     int getP(){return _potencia;}
-    void setC(float& c){_coeficiente = c;}
-    void setCP(float& c, int& p){_coeficiente = c; _potencia = p;}
+    void setC(const float& c) {_coeficiente = c;}
+    void setCP(const float& c, const int& p) {_coeficiente = c; _potencia = p;}
     void setSiguiente(Termino* ptr){ _siguiente = ptr;}
     Termino* getSiguiente(){return _siguiente;}
 
